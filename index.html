@@ -1,74 +1,145 @@
-
 <!DOCTYPE html>
-<html>
-    <head>
-        
-        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
-        <meta http-equiv="X-UA-Compatible" content="chrome=1">
-        <style type="text/css"> 
-            body 
-            {
-                margin: 0;
-                background-color: #111;
-                font-family: helvetica, arial, sans-serif;
-            }
-            canvas {
-                display: block;
-            }
-            /* remove outline on canvas */
-            canvas:focus {
-                outline: none;
-            }
-            
-            #application-splash {
-                position: absolute;
-                top: 40%;
-                width: 30%;
-                left: 35%;
-            }
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>PlayCanvas Game – Unblocked and Fullscreen | StaticQuasar931</title>
+  <meta name="description" content="Enjoy this fullscreen PlayCanvas-powered game. Fast, school-safe, unblocked, and playable on any device – no install required!" />
+  <meta name="keywords" content="playcanvas, playcanvas game, unblocked game, school-safe, chromebook game, html5 game, g@me, unbl0cked g@mes, Static931, StaticQuasar931" />
+  <meta name="robots" content="index, follow" />
 
-            #application-splash img {
-                width: 100%;
-            }
+  <!-- Open Graph -->
+  <meta property="og:title" content="PlayCanvas Fullscreen Game | Static931" />
+  <meta property="og:description" content="Play this browser-based PlayCanvas game in fullscreen. School-friendly and runs on Chromebooks!" />
+  <meta property="og:image" content="https://staticquasar931.github.io/assets/playcanvas-preview.jpg" />
+  <meta property="og:url" content="https://sites.google.com/view/staticquasar931/gm3z/playcanvas-game" />
+  <meta property="og:type" content="website" />
 
-            /* Small devices */
-            @media (min-width: 768px) {
-                #application-splash {
-                    width: 20%;
-                    left: 40%;
-                }
-            }
+  <!-- Twitter Meta -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Unblocked PlayCanvas Game" />
+  <meta name="twitter:description" content="Play this 3D PlayCanvas game – no install, no login, just fun." />
+  <meta name="twitter:image" content="https://staticquasar931.github.io/assets/playcanvas-preview.jpg" />
 
-            /* Large devices */
-            @media (min-width: 992px) {
-                #application-splash {
-                    width: 10%;
-                    left: 45%;
-                }
-            }
-        }
-        </style>
-        <title>PlayCanvas</title>
-        <script src="playcanvas-0.144.3.min.js"></script>
-        <script src="options.js"></script>
-        <script src="data.js"></script>
-    </head>
-    <body>
-        <div id="application-splash">
-            <a href="http://playcanvas.com" target="_blank"><img src="PLAY_FLAT_ORANGE3.png"/></a>
-            <div id='application-progress' />
-        </div>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: #111;
+      font-family: helvetica, arial, sans-serif;
+      height: 100%;
+      overflow: hidden;
+    }
 
-        <!--[if IE]>
-            <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
-            <script>
-                window.attachEvent("onload", function() {
-                    CFInstall.check({
-                        mode: "inline"
-                    });
-                });
-            </script>
-        <![endif]-->
-        <script src="bootstrap.js"></script>
-    </body>
+    canvas {
+      display: block;
+    }
+
+    canvas:focus {
+      outline: none;
+    }
+
+    #application-splash {
+      position: absolute;
+      top: 40%;
+      width: 30%;
+      left: 35%;
+    }
+
+    #application-splash img {
+      width: 100%;
+    }
+
+    @media (min-width: 768px) {
+      #application-splash {
+        width: 20%;
+        left: 40%;
+      }
+    }
+
+    @media (min-width: 992px) {
+      #application-splash {
+        width: 10%;
+        left: 45%;
+      }
+    }
+
+    #staticMenu {
+      position: fixed;
+      bottom: 12px;
+      right: 12px;
+      z-index: 9999;
+      background: #111;
+      color: #fff;
+      padding: 10px 14px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #0f0;
+      font-size: 14px;
+      font-family: Arial, sans-serif;
+      animation: flicker 2s infinite;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    #staticMenu a {
+      color: #4df;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    #closeStaticMenu {
+      cursor: pointer;
+      font-weight: bold;
+      color: #f44;
+    }
+
+    @keyframes flicker {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+  </style>
+
+  <script src="playcanvas-0.144.3.min.js"></script>
+  <script src="options.js"></script>
+  <script src="data.js"></script>
+</head>
+<body>
+  <div id="application-splash">
+    <a href="https://playcanvas.com" target="_blank"><img src="PLAY_FLAT_ORANGE3.png" alt="Loading PlayCanvas..." /></a>
+    <div id="application-progress"></div>
+  </div>
+
+  <div id="staticMenu">
+    <span id="closeStaticMenu">✖</span>
+    <a href="https://sites.google.com/view/staticquasar931/gm3z" target="_blank">More Unblocked Games by Static</a>
+  </div>
+
+  <script>
+    const menu = document.getElementById('staticMenu');
+    const closeBtn = document.getElementById('closeStaticMenu');
+    closeBtn.onclick = () => {
+      menu.style.display = 'none';
+      setTimeout(() => {
+        menu.style.display = 'flex';
+      }, 180000); // 3 minutes
+    };
+
+    window.onbeforeunload = function () {
+      return "Are you sure you want to leave? Progress may be lost.";
+    };
+  </script>
+
+  <!--[if IE]>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+    <script>
+      window.attachEvent("onload", function () {
+        CFInstall.check({ mode: "inline" });
+      });
+    </script>
+  <![endif]-->
+
+  <script src="bootstrap.js"></script>
+</body>
 </html>
